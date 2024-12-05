@@ -9,7 +9,7 @@
     "dev": "encore dev",
     "watch": "encore dev --watch",
     "build": "encore production --progress",
-   "heroku-postbuild": "npm install && npm install -g @symfony/webpack-encore && npm run build"
+    "heroku-postbuild": "npm install  && npm run build"
   },
   "dependencies": {
     "bootstrap": "^5.2.1",
@@ -21,6 +21,6 @@
     "webpack-notifier": "^1.15.0"
   },
   "devDependencies": {
-    "@symfony/webpack-encore": "^4.0.0"
+    "@symfony/webpack-encore": "^4.5.0"
   }
 }

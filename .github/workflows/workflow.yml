@@ -3,11 +3,13 @@ name: Deploy to Heroku
 on:
   push:
     branches:
-      - main
+      - production  # Trigger for production deployment
+      - development  # Trigger for development (testing only)
 
 jobs:
-  build-and-deploy:
+  build-and-test:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/development'  # Only run tests for development
 
     steps:
       - name: Checkout code
@@ -16,7 +18,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2.15.0
         with:
-          php-version: '8.1' # or your Laravel PHP version
+          php-version: '8.1' # or your PHP version
 
       - name: Install Composer dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
@@ -31,17 +33,33 @@ jobs:
       - name: Run PHPUnit tests
         run: ./vendor/bin/phpunit
 
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/production'  # Only deploy to Heroku on production branch
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2.15.0
+        with:
+          php-version: '8.1'  # or your PHP version
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
       - name: Set up Git user identity
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
 
-      - name: Fetch from heroku
+      - name: Fetch from Heroku
         if: success()
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
-            git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/stock-management-system.git
+            git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/your-heroku-app.git
             git fetch heroku main
             git rebase -X theirs heroku/main
 

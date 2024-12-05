@@ -1,5 +1,6 @@
 build:
   - heroku/php
+  - heroku/nodejs
 
 config:
   PHP_EXTENSIONS:

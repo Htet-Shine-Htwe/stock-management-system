@@ -1,0 +1,56 @@
+name: Deploy to Heroku
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2.15.0
+        with:
+          php-version: '8.1' # or your Laravel PHP version
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Create .env.testing file
+        run: |
+          cp .env.example .env.testing
+          echo "DB_CONNECTION=sqlite" >> .env.testing
+          echo "DB_DATABASE=:memory:" >> .env.testing
+          php artisan key:generate --env=testing
+
+      - name: Run PHPUnit tests
+        run: ./vendor/bin/phpunit
+
+      - name: Set up Git user identity
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+
+      - name: Fetch from heroku
+        if: success()
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+            git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/stock-management-system.git
+            git fetch heroku main
+            git rebase -X theirs heroku/main
+
+      - name: Continue rebase if necessary
+        run: git rebase --continue || echo "No rebase needed"
+
+      - name: Deploy to Heroku
+        if: success()
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+            git push heroku main --force

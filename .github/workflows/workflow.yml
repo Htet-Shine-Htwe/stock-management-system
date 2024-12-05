@@ -40,7 +40,7 @@ jobs:
           php-version: '8.1'  # or your PHP versionu
 
       - name: Install Composer dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+        run: composer install -q --no-interaction --prefer-dist --optimize-autoloader --no-scripts --no-progress
 
       - name: Set up Git user identity
         run: |
@@ -53,8 +53,8 @@ jobs:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
             git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/stock-management-system.git
-            git fetch heroku main
-            git rebase -X theirs heroku/main
+            git fetch heroku production
+            git rebase -X theirs heroku/production
 
       - name: Continue rebase if necessary
         run: git rebase --continue || echo "No rebase needed"
@@ -64,4 +64,4 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
-            git push heroku main --force
+            git push heroku production --force

@@ -21,7 +21,7 @@ jobs:
           php-version: '8.1' # or your PHP version
 
       - name: Install Composer dependencies
-        run: composer install -q --no-interaction --prefer-dist --optimize-autoloader --no-scripts --no-progress
+        run: composer install -q --no-interaction --prefer-dist --optimize-autoloader --no-progress
 
       - name: Run PHPUnit tests
         run: ./vendor/bin/phpunit
@@ -40,7 +40,7 @@ jobs:
           php-version: '8.1'  # or your PHP versionu
             
       - name: Install Composer dependencies
-        run: composer install -q --no-interaction --prefer-dist --optimize-autoloader --no-scripts --no-progress
+        run: composer install -q --no-interaction --prefer-dist --optimize-autoloader --no-progress
 
       - name: Set up Git user identity
         run: |

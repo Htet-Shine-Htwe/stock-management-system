@@ -38,9 +38,6 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'  # or your PHP versionu
-
-      - name: Remove Lock file
-        run: rm -f composer.lock
             
       - name: Install Composer dependencies
         run: composer install -q --no-interaction --prefer-dist --optimize-autoloader --no-scripts --no-progress

@@ -52,7 +52,7 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
-            git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/your-heroku-app.git
+            git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/stock-management-system.git
             git fetch heroku main
             git rebase -X theirs heroku/main
 

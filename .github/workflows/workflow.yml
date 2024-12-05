@@ -53,11 +53,14 @@ jobs:
       - name: Fetch from Heroku
         if: success()
         env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+            HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
             git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/stock-management-system.git
             git fetch heroku production
+            git stash save --include-untracked --message "Stashing before rebase"
             git rebase -X theirs heroku/production
+            git stash pop || echo "No stash to apply"
+        
 
       - name: Continue rebase if necessary
         run: git rebase --continue || echo "No rebase needed"

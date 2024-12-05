@@ -1,6 +1,5 @@
 <?php
-
-namespace Tests\Unit\Controllers;
+namespace Tests\Features;
 
 use App\Auth;
 use App\Contracts\UserInterface;

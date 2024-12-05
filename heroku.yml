@@ -1,5 +1,2 @@
 build:
-  docker:
-    web: ./docker/Dockerfile
-run:
-  web: php -S 0.0.0.0:8080 -t public/
+  - heroku/php

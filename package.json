@@ -1,15 +1,17 @@
 {
-  "name": "expennies",
+  "name": "sms",
   "version": "1.0.0",
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
+  },
   "scripts": {
     "dev": "encore dev",
     "watch": "encore dev --watch",
     "build": "encore production --progress",
     "heroku-postbuild": "npm install && npm run build"
   },
-  "devDependencies": {
-    "@popperjs/core": "^2.11.6",
-    "@symfony/webpack-encore": "^4.0.0",
+  "dependencies": {
     "bootstrap": "^5.2.1",
     "bootstrap-icons": "^1.10.2",
     "core-js": "^3.26.1",
@@ -17,5 +19,8 @@
     "sass": "^1.54.9",
     "sass-loader": "^13.0.2",
     "webpack-notifier": "^1.15.0"
+  },
+  "devDependencies": {
+    "@symfony/webpack-encore": "^4.0.0"
   }
 }

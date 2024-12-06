@@ -84,3 +84,15 @@ svg.icon {
 .notification.error {
   background-color: #dc3545; /* Red */
 }
+
+
+.readonly {
+  background-color: #f8f9fa!important;
+  border: 1px solid #f8f9fa ;
+}
+
+input[readonly] {
+  background-color: #bdbdbde1!important;
+  border: 1px solid #a4a4a4 ;
+  cursor: not-allowed;
+}

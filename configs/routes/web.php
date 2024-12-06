@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Controllers\AuthController;
 
 use App\Controllers\ProductController;
+use App\Controllers\StockController;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\GuestMiddleware;
 
@@ -28,11 +29,21 @@ return function (App $app) {
         $group->group('/products',function (RouteCollectorProxy $products){
             $products->get('', [ProductController::class, 'index']);
             $products->get('/create', [ProductController::class, 'create']);
+            $products->get('/edit/{product}', [ProductController::class, 'edit']);
+            $products->post('/store', [ProductController::class, 'store']);
+            $products->post('/update/{product}', [ProductController::class, 'update']);
             $products->get("/load",[ProductController::class,'load']);
             $products->delete('/delete/{product}', [ProductController::class, 'delete']);
+            $products->post("/add-stock/{product}",[ProductController::class,'addStock']);
         });
 
-    });
+        $group->group("/stocks",function(RouteCollectorProxy $stock){
+            $stock->get('', [StockController::class, 'index']);
+            $stock->get('/get/{stockMovement}', [StockController::class, 'get']);
+            $stock->get('/load', [StockController::class, 'load']);
+        });
+
+    })->add(AuthMiddleware::class);
 
     $app->group('/user', function (RouteCollectorProxy $group) {
     });

@@ -17,4 +17,6 @@ function showNotification(message, type) {
 }  
 
 
+window.bootstrap = require('bootstrap');
+
 window.showNotification = showNotification;

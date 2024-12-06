@@ -42,7 +42,7 @@ class AuthController
             return $response->withHeader('Location', '/admin/products')->withStatus(302);
         }
     
-        return $response->withHeader('Location', '/user')->withStatus(302);
+        return $response->withHeader('Location', '/products')->withStatus(302);
     }
     
 

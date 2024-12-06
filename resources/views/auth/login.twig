@@ -22,7 +22,7 @@
 									<div class="form-outline form-white mb-4">
 										<input type="email" name="email" class="form-control form-control-lg {{ errors.email ? 'is-invalid' : '' }}" value="{{ old.email }}" placeholder="Email"/>
 										<div class="invalid-feedback">
-											{{ errors.email | first }}
+											{{ errors.email  }}
 										</div>
 									</div>
 									<label class="text-black form-label">Password</label>

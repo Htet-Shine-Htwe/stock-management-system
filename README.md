@@ -64,10 +64,12 @@ cd stock-management-system
 
 ### 2. Start the Environment Using Makefile
 Run the following commands to manage the Docker environment:
-bash
+```bash
 make up          # Start Docker
 make up-build    # Build and start Docker
 make down        # Stop Docker
+make migrate     # migrate the migration files
+```
 --
 
 ## ✨ Features

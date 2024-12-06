@@ -34,6 +34,26 @@ The repository contains the following key folders:
 
 ---
 
+## 🛠️ User Credentials
+
+For testing purposes, the following user accounts are provided:
+
+### 1. **Admin User**
+- **Email**: admin@gmail.com
+- **Password**: asdffdsa
+
+This account has full administrative privileges and can manage products, orders, and stock movements.
+
+### 2. **Regular User**
+- **Email**: user1@example.com
+- **Password**: asdffdsa
+
+This account has limited access and can view products, place orders, and check purchase history.
+
+You can use these credentials to log in and test the application's different functionalities based on user roles.
+
+---
+
 ## 🛠️ Getting Started
 
 ### 1. Clone the Repository

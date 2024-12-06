@@ -46,7 +46,7 @@ const ajax = (url, method = 'get', data = {}, domElement = null) => {
                     handleValidationErrors(errors, domElement)
                 })
             } else if (response.status === 404) {
-                alert(response.statusText)
+                // alert(response.statusText)
             }
         }
 

@@ -79,7 +79,7 @@ final class Version20230515074438 extends AbstractMigration
             quantity INT NOT NULL,
             movement_type ENUM("IN", "OUT") NOT NULL,  -- IN for stock addition, OUT for sale or removal
             created_at DATETIME NOT NULL,
-            FOREIGN KEY(product_id) REFERENCES products(id),
+            FOREIGN KEY(product_id) REFERENCES products(id) ON DELETE CASCADE,
             PRIMARY KEY(id)
         ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
 

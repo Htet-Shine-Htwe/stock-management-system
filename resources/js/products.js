@@ -4,7 +4,7 @@ import { get, post, del } from "./ajax";
 window.addEventListener("DOMContentLoaded", function () {
     // Initialize DataTable
 
-    const refer_product_id = null;
+    const product_id = null;
     const table = new DataTable("#productsTable", {
         serverSide: true,
         ajax: "/admin/products/load",
@@ -41,6 +41,8 @@ window.addEventListener("DOMContentLoaded", function () {
 
         if (deleteBtn) {
             const productId = deleteBtn.getAttribute("data-id");
+
+            
 
             if (confirm("Are you sure you want to delete this product?")) {
                 // Show loading indicator

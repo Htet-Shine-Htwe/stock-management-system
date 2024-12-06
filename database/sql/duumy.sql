@@ -20,7 +20,7 @@ INSERT INTO categories (name, description, created_at, updated_at) VALUES
 ('Toys', 'Toys for kids and collectors', NOW(), NOW()),
 ('Games', 'Board and puzzle games', NOW(), NOW());
 
-\INSERT INTO products (name, description, price, stock_quantity, category_id, created_at, updated_at) VALUES
+INSERT INTO products (name, description, price, stock_quantity, category_id, created_at, updated_at) VALUES
 ('Laptop', 'High performance laptop for work and gaming.', 999.99, 100, 1, NOW(), NOW()),
 ('Smartphone', 'Latest smartphone with all the modern features.', 799.99, 200, 2, NOW(), NOW()),
 ('T-Shirt', 'Comfortable cotton t-shirt in various sizes.', 19.99, 500, 3, NOW(), NOW()),

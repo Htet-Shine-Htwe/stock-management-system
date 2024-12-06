@@ -90,7 +90,7 @@ final class Version20230515074438 extends AbstractMigration
             user_id INT UNSIGNED NOT NULL,
             order_date DATETIME NOT NULL,
             total_amount DECIMAL(10, 2) NOT NULL,
-            status ENUM("PENDING", "COMPLETED", "CANCELLED") NOT NULL,
+            status ENUM("PENDING", "COMPLETED", "CANCELLED") DEFAULT "PENDING",
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL,
             FOREIGN KEY(user_id) REFERENCES users(id),

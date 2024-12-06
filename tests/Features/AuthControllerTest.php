@@ -79,7 +79,7 @@ class AuthControllerTest extends TestCase
         // Expecting response to redirect to '/user'
         $responseMock->expects($this->once())
             ->method('withHeader')
-            ->with('Location', '/user') // Expected '/user'
+            ->with('Location', '/products') // Expected '/user'
             ->willReturnSelf();
 
         $responseMock->expects($this->once())

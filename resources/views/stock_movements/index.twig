@@ -1,0 +1,40 @@
+{% extends 'layout.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('stock_transaction') }}
+{% endblock %}
+
+{% block title %}Stock Transactions{% endblock %}
+
+{% block content %}
+    <div class="products container content-body">
+        <div>
+            <table id="stockTable" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Product name</th>
+                        <th>Type</th>
+                        <th>Quantity</th>
+                        <th>Created At</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                    <tr>
+                        <td 
+                        class="text-end"
+                        colspan="3">
+                            Total
+                        </td>
+                        <td id="totalStock">
+                        </td>
+                        <td></td>
+                    </tr>
+                </tfoot>                               
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

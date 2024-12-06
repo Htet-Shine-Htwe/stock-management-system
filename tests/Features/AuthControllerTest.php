@@ -181,7 +181,7 @@ class AuthControllerTest extends TestCase
 
         $responseMock->expects($this->once())
             ->method('withHeader')
-            ->with('Location', '/')
+            ->with('Location', '/login')
             ->willReturnSelf();
 
         $responseMock->expects($this->once())

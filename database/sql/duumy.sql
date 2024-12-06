@@ -50,29 +50,3 @@ INSERT INTO products (name, description, price, stock_quantity, category_id, cre
 ('Air Purifier', 'Air purifier with HEPA filter for cleaner air.', 149.99, 70, 5, NOW(), NOW());
 
 
-INSERT INTO stock_movements (product_id, quantity, movement_type, created_at) VALUES
-(1, 50, 'IN', NOW()),  -- Laptop stock added
-(2, 100, 'IN', NOW()),  -- Smartphone stock added
-(3, 200, 'IN', NOW()),  -- T-Shirt stock added
-(4, 10, 'IN', NOW()),  -- Sofa stock added
-(5, 20, 'IN', NOW()),  -- Cookware Set stock added
-(6, 50, 'IN', NOW()),  -- Novel stock added
-(7, 100, 'IN', NOW()),  -- Action Figure stock added
-(8, 150, 'IN', NOW()),  -- Puzzle stock added
-(9, 40, 'IN', NOW()),  -- Headphones stock added
-(10, 60, 'IN', NOW()),  -- Smartwatch stock added
-(11, 30, 'IN', NOW()),  -- Coffee Maker stock added
-(12, 50, 'IN', NOW()),  -- Blender stock added
-(13, 25, 'IN', NOW()),  -- Camera stock added
-(14, 15, 'IN', NOW()),  -- Smart TV stock added
-(15, 50, 'IN', NOW()),  -- Laptop Bag stock added
-(16, 100, 'IN', NOW()),  -- E-Reader stock added
-(17, 60, 'IN', NOW()),  -- Tablet stock added
-(18, 300, 'IN', NOW()),  -- Wireless Mouse stock added
-(19, 200, 'IN', NOW()),  -- Keyboard stock added
-(20, 100, 'IN', NOW()),  -- Speakers stock added
-(21, 50, 'IN', NOW()),  -- Gaming Chair stock added
-(22, 150, 'IN', NOW()),  -- Smart Bulb stock added
-(23, 20, 'IN', NOW()),  -- Projector stock added
-(24, 50, 'IN', NOW()),  -- Electric Kettle stock added
-(25, 75, 'IN', NOW());  -- Toaster stock added

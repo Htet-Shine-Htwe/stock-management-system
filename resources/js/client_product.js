@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById('place-order-btn').addEventListener('click', function () {
         const loadingIndicator = document.createElement('div');
-        loadingIndicator.textContent = "Deleting...";
+        loadingIndicator.textContent = "Ordering...";
         loadingIndicator.classList.add('loading-indicator');
         document.body.appendChild(loadingIndicator);
 
@@ -76,6 +76,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 table.draw(); 
                 cart.clearCart();
 
+                const modal = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
+                modal.hide();
             } else {
                 showNotification('Failed To Order!', 'error');
             }

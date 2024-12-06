@@ -1,0 +1,31 @@
+{% extends 'user-layout.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('client_product') }}
+{% endblock %}
+
+{% block title %}Products{% endblock %}
+
+
+{% block content %}
+    {% include 'client-products/cart-modal.twig' %}
+
+    <div class="products container content-body">
+        <h1 class="my-4">Products</h1>
+
+        <table id="productTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Stock Quantity</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+{% endblock %}

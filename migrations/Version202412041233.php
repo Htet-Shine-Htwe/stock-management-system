@@ -56,17 +56,6 @@ final class Version20230515074438 extends AbstractMigration
             PRIMARY KEY(id)
         ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
 
-        // supplier
-        $this->addSql('
-        CREATE TABLE suppliers (
-            id INT UNSIGNED AUTO_INCREMENT NOT NULL,
-            name VARCHAR(255) NOT NULL,
-            contact_info VARCHAR(255) DEFAULT NULL,
-            created_at DATETIME NOT NULL,
-            updated_at DATETIME NOT NULL,
-            PRIMARY KEY(id)
-        ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
-
         // products
         $this->addSql('
         CREATE TABLE products (
@@ -76,12 +65,10 @@ final class Version20230515074438 extends AbstractMigration
             price DECIMAL(10, 2) NOT NULL,
             stock_quantity INT UNSIGNED DEFAULT 0,
             category_id INT UNSIGNED DEFAULT NULL,
-            supplier_id INT UNSIGNED DEFAULT NULL,
             created_at DATETIME NOT NULL,
             updated_at DATETIME NOT NULL,
             PRIMARY KEY(id),
-            FOREIGN KEY(category_id) REFERENCES categories(id),
-            FOREIGN KEY(supplier_id) REFERENCES suppliers(id)
+            FOREIGN KEY(category_id) REFERENCES categories(id)
         ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
 
         // stock_movements
@@ -129,5 +116,7 @@ final class Version20230515074438 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
 
         $this->addSql('DROP TABLE users');
+        
+
     }
 }

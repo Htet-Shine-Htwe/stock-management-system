@@ -1,24 +1,27 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Controllers;
 
-use App\Auth;
+use App\Contracts\AuthInterface;
 use App\Contracts\RequestValidatorFactoryInterface;
 use App\Enum\RoleEnum;
-use App\Exceptions\ValidationException;
-use App\Requests\UserLoginRequestValidator;
+use App\Exception\ValidationException;
+use App\RequestValidators\UserLoginRequestValidator;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\Twig;
-use Psr\Http\Message\ServerRequestInterface as Request;
 
 class AuthController
 {
-    public function __construct(private readonly Twig $twig, 
-    private readonly RequestValidatorFactoryInterface $requestValidatorFactory,
-    private readonly Auth $auth)
-    {
-
+    public function __construct(
+        private readonly Twig $twig,
+        private readonly RequestValidatorFactoryInterface $requestValidatorFactory,
+        private readonly AuthInterface $auth    
+    ) {
     }
+
 
     public function loginView(Request $request, Response $response): Response
     {
@@ -29,14 +32,14 @@ class AuthController
     {
         $data = $this->requestValidatorFactory->make(UserLoginRequestValidator::class)->validate($request->getParsedBody());
     
-        if (!$this->auth->attempt($data)) {
+        if (!$this->auth->attemptLogin($data)) {
             throw new ValidationException(['password' => 'You have entered invalid email or password']);
         }
     
         $user = $this->auth->user();
     
         if ($user->getRole()->getName() === RoleEnum::Admin->value) {
-            return $response->withHeader('Location', '/admin')->withStatus(302);
+            return $response->withHeader('Location', '/admin/products')->withStatus(302);
         }
     
         return $response->withHeader('Location', '/user')->withStatus(302);

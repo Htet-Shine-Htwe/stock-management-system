@@ -3,7 +3,7 @@
 namespace App\Requests;
 
 use App\Contracts\RequestValidatorInterface;
-use App\Exceptions\ValidationException;
+use App\Exception\ValidationException;
 use Doctrine\ORM\EntityManager;
 use Valitron\Validator;
 

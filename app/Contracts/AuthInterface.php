@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Contracts;
 
 
 interface AuthInterface
 {
-    public function user() : ?UserInterface;
+    public function user(): ?UserInterface;
 
-    public function attempt(array $data) :bool;
+    public function attemptLogin(array $credentials): bool;
 
-    public function checkCredentials(UserInterface $user,array $credentials) :bool;
+    public function checkCredentials(UserInterface $user, array $credentials): bool;
 
-    public function logOut():void;
+    public function logOut(): void;
 
+    public function logIn(UserInterface $user): void;
 }

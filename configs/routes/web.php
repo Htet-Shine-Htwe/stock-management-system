@@ -3,13 +3,11 @@
 declare(strict_types=1);
 
 use App\Controllers\AuthController;
-use App\Controllers\CategoryController;
-use App\Controllers\HomeController;
-use App\Middleware\AdminGuardMiddleware;
+
+use App\Controllers\ProductController;
 use App\Middleware\AuthMiddleware;
 use App\Middleware\GuestMiddleware;
-use App\Middleware\RoleGuardMiddleware;
-use App\Middleware\UserGuardMiddleware;
+
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -17,8 +15,8 @@ return function (App $app) {
 
     // Routes for guests (login page)
     $app->group('', function (RouteCollectorProxy $route) {
-        $route->get('/login', [AuthController::class, 'loginView'])->add(GuestMiddleware::class);
-        $route->post('/login', [AuthController::class, 'login'])->add(GuestMiddleware::class);
+        $route->get('/login', [AuthController::class, 'loginView']);
+        $route->post('/login', [AuthController::class, 'login']);
     })->add(GuestMiddleware::class);
 
     // Logout route
@@ -27,9 +25,16 @@ return function (App $app) {
     // Routes for admin and user roles
     $app->group('/admin', function (RouteCollectorProxy $group) {
        
-    })->add(AdminGuardMiddleware::class); // Only admin has access to these routes
+        $group->group('/products',function (RouteCollectorProxy $products){
+            $products->get('', [ProductController::class, 'index']);
+            $products->get('/create', [ProductController::class, 'create']);
+            $products->get("/load",[ProductController::class,'load']);
+            $products->delete('/delete/{product}', [ProductController::class, 'delete']);
+        });
+
+    });
 
     $app->group('/user', function (RouteCollectorProxy $group) {
-    })->add(UserGuardMiddleware::class); // Both admin and user can access
+    });
 
 };

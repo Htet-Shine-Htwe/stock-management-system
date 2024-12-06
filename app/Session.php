@@ -1,56 +1,52 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App;
+
 use App\Contracts\SessionInterface;
 use App\DataObjects\SessionConfig;
-use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
+use App\Exception\SessionException;
 
 class Session implements SessionInterface
 {
-
     public function __construct(private readonly SessionConfig $options)
     {
-
     }
 
-    public function start() :void
+    public function start(): void
     {
-        if($this->isActive())
-        {
-            throw new \RuntimeException('Session was already been started');
-        }
-        
-        if(headers_sent($filename,$line))
-        {
-            throw new \RuntimeException('Header already sent');
+        if ($this->isActive()) {
+            throw new SessionException('Session has already been started');
         }
 
-        session_set_cookie_params([
-            'secure' => $this->options->secure,
-            'httpOnly' =>$this->options->httpOnly ,
-            'sameSite' => $this->options->sameSite->value ]);
+        if (headers_sent($fileName, $line)) {
+            throw new SessionException('Headers have already sent by ' . $fileName . ':' . $line);
+        }
 
+        session_set_cookie_params(
+            [
+                'secure'   => $this->options->secure,
+                'httponly' => $this->options->httpOnly,
+                'samesite' => $this->options->sameSite->value,
+            ]
+        );
 
-        if(! empty($this->options->name))
-        {
+        if (! empty($this->options->name)) {
             session_name($this->options->name);
         }
 
-        if(! session_start())
-        {
-            throw new SessionNotFoundException('Unable to start session');
+        if (! session_start()) {
+            throw new SessionException('Unable to start the session');
         }
-
-        // session_start();
-
     }
 
-    public function close() :void
+    public function save(): void
     {
         session_write_close();
     }
 
-    public function isActive():bool
+    public function isActive(): bool
     {
         return session_status() === PHP_SESSION_ACTIVE;
     }
@@ -80,18 +76,17 @@ class Session implements SessionInterface
         unset($_SESSION[$key]);
     }
 
-    public function flash(string $key, array $message):void
+    public function flash(string $key, array $messages): void
     {
-        $_SESSION[$this->options->flashName][$key] = $message;
+        $_SESSION[$this->options->flashName][$key] = $messages;
     }
 
     public function getFlash(string $key): array
     {
-        $message = $_SESSION[$this->options->flashName][$key] ?? [];
+        $messages = $_SESSION[$this->options->flashName][$key] ?? [];
 
         unset($_SESSION[$this->options->flashName][$key]);
 
-        return $message;
-
+        return $messages;
     }
-}   
+}

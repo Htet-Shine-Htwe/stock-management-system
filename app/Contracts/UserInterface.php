@@ -1,14 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Contracts;
 
 interface UserInterface
 {
-    public function getId();
+    public function getId(): int;
+    public function getPassword(): string;
 
-    public function getPassword();
-
-    public function getName();
-
-    public function getRole();
+    public function getRole(): mixed;
 }

@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Entity\Traits\HasTimeStamp;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity, ORM\Table(name: 'products')]
 class Product
 {
+    use HasTimeStamp;
+
     #[ORM\Id, ORM\Column(type: 'integer', options: ['unsigned' => true]), ORM\GeneratedValue]
     private int $id;
 
@@ -22,7 +25,7 @@ class Product
     private float $price;
 
     #[ORM\Column(type: 'integer', options: ['unsigned' => true])]
-    private int $stockQuantity;
+    private int $stock_quantity;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
@@ -69,14 +72,14 @@ class Product
         return $this;
     }
 
-    public function getStockQuantity(): int
+public function getStockQuantity(): int
     {
-        return $this->stockQuantity;
+        return $this->stock_quantity;
     }
 
-    public function setStockQuantity(int $stockQuantity): self
+    public function setStockQuantity(int $stock_quantity): self
     {
-        $this->stockQuantity = $stockQuantity;
+        $this->stock_quantity = $stock_quantity;
 
         return $this;
     }

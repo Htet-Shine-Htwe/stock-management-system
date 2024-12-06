@@ -6,8 +6,7 @@ use App\Contracts\UserInterface;
 use App\Controllers\AuthController;
 use App\Contracts\RequestValidatorFactoryInterface;
 use App\Entity\Role;
-use App\Enum\RoleEnum;
-use App\Exceptions\ValidationException;
+use App\Exception\ValidationException;
 use App\Requests\UserLoginRequestValidator;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -63,7 +62,7 @@ class AuthControllerTest extends TestCase
             ->willReturn($validatorMock);
 
         // Mocking Auth behavior
-        $this->authMock->method('attempt')
+        $this->authMock->method('attemptLogin')
             ->with(['email' => 'user@example.com', 'password' => 'correct-password'])
             ->willReturn(true);
 
@@ -115,7 +114,7 @@ class AuthControllerTest extends TestCase
             ->willReturn($validatorMock);
 
         // Mocking Auth behavior
-        $this->authMock->method('attempt')
+        $this->authMock->method('attemptLogin')
             ->with(['email' => 'admin@example.com', 'password' => 'correct-password'])
             ->willReturn(true);
 
@@ -131,7 +130,7 @@ class AuthControllerTest extends TestCase
         // Mocking response behavior for redirection
         $responseMock->expects($this->once())
             ->method('withHeader')
-            ->with('Location', '/admin')
+            ->with('Location', '/admin/products')
             ->willReturnSelf();
 
         $responseMock->expects($this->once())
@@ -156,7 +155,7 @@ class AuthControllerTest extends TestCase
         $responseMock = $this->createMock(ResponseInterface::class);
 
         // Mocking Auth behavior
-        $this->authMock->method('attempt')->willReturn(false);
+        $this->authMock->method('attemptLogin')->willReturn(false);
 
         // Mocking the validator behavior
         $validatorMock = $this->createMock(UserLoginRequestValidator::class);

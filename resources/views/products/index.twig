@@ -1,0 +1,75 @@
+{% extends 'layout.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('products') }}
+{% endblock %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+    <div class="products container content-body">
+        <div class="text-end mb-4">
+            <a href="/products/create" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-1"></i>
+                New Product
+            </a>
+        </div>
+
+        <div>
+            <table id="productsTable" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Stock Quantity</th>
+                        <th>Category</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal for New Product -->
+    <div class="modal fade" id="newProductModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="/products" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">New Product</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ csrf.fields | raw }}
+                        <div class="form-outline form-white mb-4">
+                            <input type="text" name="name" required class="form-control form-control-lg" placeholder="Product Name" />
+                        </div>
+                        <div class="form-outline form-white mb-4">
+                            <textarea name="description" class="form-control form-control-lg" placeholder="Product Description"></textarea>
+                        </div>
+                        <div class="form-outline form-white mb-4">
+                            <input type="number" name="price" required step="0.01" class="form-control form-control-lg" placeholder="Product Price" />
+                        </div>
+                        <div class="form-outline form-white mb-4">
+                            <input type="number" name="stock_quantity" required class="form-control form-control-lg" placeholder="Stock Quantity" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="bi bi-x-circle me-1"></i>
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle me-1"></i>
+                            Create
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

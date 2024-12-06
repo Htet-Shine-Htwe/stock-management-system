@@ -24,4 +24,21 @@ class StockMovementService
 
         return $stockMovement;
     }
-}
+
+    public function recordStockMovement(array $products)
+    {
+        foreach ($products as $product) {
+            $productEntity = $this->entityManagerService->getRepository(Product::class)->find($product['id']);
+            $stockMovement = new StockMovement();
+            $stockMovement->setProduct($productEntity);
+            $stockMovement->setQuantity($product['quantity']);
+            $stockMovement->setMovementType('OUT');
+            $stockMovement->setCreatedAt(new \DateTime());
+
+            $this->entityManagerService->persist($stockMovement);
+        }
+
+        // Commit transaction
+        $this->entityManagerService->flush();
+    }
+}   

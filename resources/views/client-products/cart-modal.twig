@@ -1,0 +1,24 @@
+<!-- Cart Modal -->
+<div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cartModalLabel">Shopping Cart</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="cart-items-container">
+                    <!-- Cart items will be dynamically added here -->
+                </div>
+                 <div id="cart-total" class="mt-4 text-end">
+                    <hr>
+                    <h5>Total Price: $<span id="total-price">0.00</span></h5>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="place-order-btn">Place Order</button>
+            </div>
+        </div>
+    </div>
+</div>

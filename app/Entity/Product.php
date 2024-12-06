@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Entity\Traits\HasTimeStamp;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity, ORM\Table(name: 'products')]
@@ -26,6 +27,7 @@ class Product
 
     #[ORM\Column(type: 'integer', options: ['unsigned' => true])]
     private int $stock_quantity;
+
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
@@ -72,7 +74,7 @@ class Product
         return $this;
     }
 
-public function getStockQuantity(): int
+    public function getStockQuantity(): int
     {
         return $this->stock_quantity;
     }

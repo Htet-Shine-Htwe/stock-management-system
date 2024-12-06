@@ -1,0 +1,112 @@
+{% extends 'layout.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('products') }}
+{% endblock %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+<h1>{{ product ? 'Edit Product' : 'Create Product' }}</h1>
+
+<form id="productForm" method="POST" action="{{ product ? '/admin/products/update/' ~ product.id : '/admin/products/store' }}">
+    {{ csrf.fields | raw}}
+
+    {% if product %}
+    <input type="hidden" name="_method" value="PUT">
+    {% endif %}
+
+    <!-- Name Field -->
+    <div class="form-outline form-white mb-4">
+        <label for="name" class="form-label">Name</label>
+        <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            value="{{ product.name }}" 
+            class="form-control form-control-lg {{ errors.name ? 'is-invalid' : '' }}"
+            placeholder="Name"
+        >   
+      {% if errors.name %}
+        <div class="invalid-feedback">
+            {{ errors.name|join(', ') }} <!-- Show all error messages for 'name' -->
+        </div>
+    {% endif %}
+    </div>
+
+    <!-- Description Field -->
+    <div class="form-outline form-white mb-4">
+        <label for="description" class="form-label">Description</label>
+        <textarea 
+            id="description" 
+            name="description" 
+            maxlength="500"
+            class="form-control form-control-lg"
+            placeholder="Description">{{ product.description  }}</textarea>
+       <div class="invalid-feedback">
+			{{ errors.description  }}
+        </div>
+        
+    </div>
+
+    <!-- Category Field -->
+    <div class="form-outline form-white mb-4">
+        <label for="category" class="form-label">Category</label>
+        <select id="category" name="category" 
+                class="form-select form-select-lg  {{ errors.category ? 'is-invalid' : '' }}" required>
+            <option value="">Select Category</option>
+            {% for category in categories %}
+            <option value="{{ category.id }}" 
+                {{ product.category.id == category.id ? 'selected' : ''  }}>
+                {{ category.name }}
+            </option>
+            {% endfor %}
+        </select>
+         {% if errors.category %}
+        <div class="invalid-feedback">
+            {{ errors.category|join(', ') }} <!-- Show all error messages for 'category' -->
+        </div>
+    {% endif %}
+    </div>
+
+    <!-- Price Field -->
+    <div class="form-outline form-white mb-4">
+        <label for="price" class="form-label">Price</label>
+        <input 
+            type="number" 
+            id="price" 
+            name="price" 
+            value="{{ product.price  }}" 
+            required 
+            min="0" 
+            step="0.01"
+            class="form-control form-control-lg"
+            placeholder="Price"
+        >
+ <div class="invalid-feedback">
+			{{ errors.price  }}
+        </div>
+    </div>
+
+    <!-- Stock Quantity Field -->
+    <div class="form-outline form-white mb-4">
+        <label for="stock_quantity" class="form-label">Stock Quantity</label>
+        <input 
+            type="number" 
+            id="stock_quantity" 
+            name="stock_quantity" 
+            value="{{ product.stockQuantity  ?? 0 }}" 
+            readonly    
+            min="0" 
+            class="form-control form-control-lg "
+            placeholder="Stock Quantity"
+        >
+         <div class="invalid-feedback">
+			{{ errors.stock_quantity  }}
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">{{ product ? 'Update' : 'Create' }}</button>
+</form>
+{% endblock %}

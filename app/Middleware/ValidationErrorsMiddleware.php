@@ -24,7 +24,7 @@ class ValidationErrorsMiddleware implements MiddlewareInterface
         if ($errors = $this->session->getFlash('errors')) {
             $this->twig->getEnvironment()->addGlobal('errors', $errors);
         }
-
+        
         return $handler->handle($request);
     }
 }

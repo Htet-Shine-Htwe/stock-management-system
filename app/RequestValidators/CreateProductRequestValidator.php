@@ -14,10 +14,9 @@ class CreateProductRequestValidator implements RequestValidatorInterface
     {
         $v = new Validator($data);
 
-        // Validation rules
-        $v->rule('required', ['name', 'price', 'stock_quantity']);
+        $v->rule('required', ['name', 'price', 'stock_quantity', 'category']); 
         $v->rule('lengthMax', 'name', 255);
-        $v->rule('lengthMax', 'description', 1000); // Optional rule for description
+        $v->rule('lengthMax', 'description', 1000); 
         $v->rule('numeric', 'price');
         $v->rule('min', 'price', 0.01);
         $v->rule('integer', 'stock_quantity');

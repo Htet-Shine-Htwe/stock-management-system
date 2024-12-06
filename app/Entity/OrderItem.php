@@ -39,7 +39,10 @@ class OrderItem
     public function setOrder(Order $order): self
     {
         $this->order = $order;
-
+        // Automatically add this OrderItem to the order's orderItems collection
+        if (!$order->getOrderItems()->contains($this)) {
+            $order->addOrderItem($this);
+        }
         return $this;
     }
 
@@ -51,7 +54,6 @@ class OrderItem
     public function setProduct(Product $product): self
     {
         $this->product = $product;
-
         return $this;
     }
 
@@ -63,7 +65,6 @@ class OrderItem
     public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
-
         return $this;
     }
 
@@ -75,7 +76,6 @@ class OrderItem
     public function setPrice(float $price): self
     {
         $this->price = $price;
-
         return $this;
     }
 }

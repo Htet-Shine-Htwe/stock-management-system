@@ -6,20 +6,24 @@ namespace App\Services;
 
 use App\Contracts\EntityManagerServiceInterface;
 use App\DataObjects\DataTableQueryParams;
+use App\Entity\Category;
 use App\Entity\Product;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class ProductService
 {
-    public function __construct(private readonly EntityManagerServiceInterface $entityManager)
+    public function __construct(
+        private readonly EntityManagerServiceInterface $entityManager,
+        private readonly StockMovementService $stockMovementService
+    )
     {
     }
 
-    public function create(string $name, string $description, float $price, int $stockQuantity): Product
+    public function create(string $name, string $description,Category $category, float $price, int $stockQuantity): Product
     {
         $product = new Product();
 
-        return $this->update($product, $name, $description, $price, $stockQuantity);
+        return $this->update($product, $name, $description, $price, $stockQuantity,$category);
     }
 
     public function getPaginatedProducts(DataTableQueryParams $params): Paginator
@@ -30,8 +34,8 @@ class ProductService
             ->setFirstResult($params->start)
             ->setMaxResults($params->length);
 
-        $orderBy = in_array($params->orderBy, ['name', 'price', 'stockQuantity', 'updatedAt']) ? $params->orderBy : 'updatedAt';
-        $orderDir = strtolower($params->orderDir) === 'asc' ? 'asc' : 'desc';
+        $orderBy = in_array($params->orderBy, ['name', 'price', 'stockQuantity', 'createdAt','updatedAt']) ? $params->orderBy : 'createdAt';
+        $orderDir = strtolower($params->orderDir) == 'asc' ? 'asc' : 'desc';
 
         if (!empty($params->searchTerm)) {
             $query->where('p.name LIKE :name')->setParameter(
@@ -50,12 +54,14 @@ class ProductService
         return $this->entityManager->find(Product::class, $id);
     }
 
-    public function update(Product $product, string $name, string $description, float $price, int $stockQuantity): Product
+    public function update(Product $product, string $name, string $description, float $price, int $stockQuantity,Category $category): Product
     {
         $product->setName($name);
         $product->setDescription($description);
         $product->setPrice($price);
+        $product->setCategory($category);
         $product->setStockQuantity($stockQuantity);
+        $product->setCreatedAt(new \DateTime());
         $product->setUpdatedAt(new \DateTime());
 
         return $product;
@@ -66,4 +72,18 @@ class ProductService
         $this->entityManager->remove($product);
         $this->entityManager->flush();
     }
+
+    public function addStock(Product $product, int $quantity): Product
+    {
+        $product->setStockQuantity($product->getStockQuantity() + $quantity);
+    
+        $this->entityManager->persist($product);
+        
+        $this->entityManager->flush();
+
+        $this->stockMovementService->createStockMovement($product, $quantity, 'IN');
+
+        return $product;
+    }
+    
 }
